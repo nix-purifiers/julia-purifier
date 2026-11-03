@@ -6,13 +6,7 @@ name: pages
 on:
   push:
     branches: [main]
-    paths:
-      - README.md
-      - .github/workflows/pages.yml
   pull_request:
-    paths:
-      - README.md
-      - .github/workflows/pages.yml
   workflow_dispatch:
 
 permissions:
@@ -38,11 +32,11 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: nix-purifiers/nix-purifiers.github.io
-          ref: 0ee676f7396589c9c14f236b2d4e6b0477200ab3
+          ref: e785d0ecd6dd096e4f1b8ba049b79fe057cc1ec9
           path: .pages-theme
           persist-credentials: false
       - name: Prepare the project documentation
-        run: python3 .pages-theme/docs-site/prepare.py --repository "$GITHUB_REPOSITORY"
+        run: python3 .pages-theme/docs-site/prepare.py --repository "$GITHUB_REPOSITORY" --model --check-source .
       - name: Build the project site
         uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1
         with:
