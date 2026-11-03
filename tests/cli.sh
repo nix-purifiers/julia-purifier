@@ -190,7 +190,8 @@ step_damaged() {
   expect_failure tampered "hash mismatch"
   # An edit without the lock run: the content hash no longer matches.
   fixture app edited
-  sed -i 's/"server": "https/"server": "http/' "$work/edited/julia-purifier.lock.json"
+  sed -i.orig 's/"server": "https/"server": "http/' "$work/edited/julia-purifier.lock.json"
+  rm "$work/edited/julia-purifier.lock.json.orig"
   expect_failure edited "does not match the hash of its own content"
   # A missing entry: the manifest pins JSON, and the lockfile has no hash
   # for it.
@@ -223,7 +224,7 @@ step_prefetch() {
   # The server stops when its input closes, so the input stays open for
   # a minute after the request, which is long enough for the reply.
   { printf 'Content-Length: %d\r\n\r\n%s' "${#body}" "$body"; sleep 60; } \
-    | timeout 900 "$cli" language-server > "$work/lsp.out" 2> "$work/lsp.err" || true
+    | nix shell 'nixpkgs#coreutils' -c timeout 900 "$cli" language-server > "$work/lsp.out" 2> "$work/lsp.err" || true
   grep -q '"capabilities"' "$work/lsp.out" || {
     echo "the language server did not answer initialize:" >&2
     cat "$work/lsp.err" >&2
