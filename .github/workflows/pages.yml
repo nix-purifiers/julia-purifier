@@ -32,11 +32,11 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
         with:
           repository: nix-purifiers/nix-purifiers.github.io
-          ref: 2c54c482a33e4658ff703156956b35fec52eeb1a
+          ref: 8d209c6ef32f5b95dc90e521bf3301facecad53b
           path: .pages-theme
           persist-credentials: false
       - name: Prepare the project documentation
-        run: python3 .pages-theme/docs-site/prepare.py --repository "$GITHUB_REPOSITORY" --model --check-source .
+        run: python3 .pages-theme/docs-site/prepare.py --repository "$GITHUB_REPOSITORY" --model --source-status .
       - name: Build the project site
         uses: actions/jekyll-build-pages@44a6e6beabd48582f863aeeb6cb2151cc1716697 # v1
         with:
