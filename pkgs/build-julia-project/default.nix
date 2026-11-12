@@ -89,7 +89,7 @@
 let
   system = stdenvNoCC.hostPlatform.system;
   lock = purifier.checkLock (
-    import ./lock.nix { inherit lib; } {
+    import ../../lib-overlays/default/lock.nix { inherit lib; } {
       inherit src lockFile manifest;
     }
   );
@@ -152,7 +152,7 @@ let
 
   # The downloads that go into the depot at their own path: artifacts and
   # registries. Package sources come from trees/ and git/, and
-  # nix/lib/place.jl puts them at the paths Julia derives from the
+  # pkgs/build-julia-project/place.jl puts them at the paths Julia derives from the
   # manifests.
   depotPaths = builtins.filter (p: lib.hasPrefix "artifacts/" p || lib.hasPrefix "registries/" p) (
     map (d: d.path) l.downloads

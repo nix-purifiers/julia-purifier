@@ -21,7 +21,7 @@
 #   placements  per package of the manifest, of a recorded test environment
 #               and of the editor environment: its name, UUID and tree
 #               hash, the download path of its source, and whether the
-#               project's manifest pins it. nix/lib/place.jl puts each
+#               project's manifest pins it. pkgs/build-julia-project/place.jl puts each
 #               source at the depot path Julia looks for it at
 #   tests       per project directory with a test target that Pkg tests in
 #               a sandbox, the recorded Project.toml and Manifest.toml text

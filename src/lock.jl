@@ -344,7 +344,7 @@ end
 
 # The lockfile's text. It starts with the format `version` and the `hash`
 # of its own content: the SHA-256 of the text with the hash's value empty.
-# nix/lib/lock.nix checks that hash before it parses the file, so an edited,
+# lib-overlays/default/lock.nix checks that hash before it parses the file, so an edited,
 # truncated or malformed lockfile fails with a message to relock.
 function lock_text(lock)
     order = vcat(["version", "hash"], sort([k for k in keys(lock) if k ∉ ("version", "hash")]))
@@ -610,7 +610,7 @@ function main(project_arg, lockfile_arg = nothing, update = nothing)
                 env[k] = replace(v, root => ROOT)
             end
             # The manifest's project hash depends on where the project lies,
-            # so the build computes it (nix/lib/project-hash.jl) and the
+            # so the build computes it (pkgs/build-julia-project/project-hash.jl) and the
             # lock leaves it out.
             env["Manifest.toml"] = replace(env["Manifest.toml"], r"^project_hash = .*\n"m => "")
         end

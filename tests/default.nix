@@ -130,7 +130,7 @@ let
   };
 
   # What `julia-purifier prefetch` realizes for the app fixture.
-  appPrefetch = import ../nix/lib/prefetch.nix {
+  appPrefetch = import ../pkgs/build-julia-project/prefetch.nix {
     inherit pkgs;
     src = ./fixtures/app;
     flakeLock = ../flake.lock;
