@@ -23,7 +23,7 @@ let
     inherit (pkgs) lib;
     inherit flakeLock;
   };
-  buildJuliaProject = pkgs.callPackage ./build-julia-project.nix { inherit purifier; };
+  buildJuliaProject = pkgs.callPackage ./default.nix { inherit purifier; };
   project = buildJuliaProject { inherit src lockFile manifest; };
 in
 pkgs.runCommand "julia-purifier-prefetch" { } ''

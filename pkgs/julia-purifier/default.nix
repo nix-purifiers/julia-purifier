@@ -25,6 +25,7 @@
 # the major and minor version the manifest records, from the nixpkgs this
 # package was built from.
 {
+  lib,
   writeShellApplication,
   coreutils,
   findutils,
@@ -37,6 +38,17 @@
   # The Julia for a directory without a manifest.
   julia-bin,
 }:
+let
+  runtime = lib.fileset.toSource {
+    root = ../..;
+    fileset = lib.fileset.unions [
+      ../../lib-overlays
+      ../../pkgs
+      ../../src
+      ../../flake.lock
+    ];
+  };
+in
 writeShellApplication {
   name = "julia-purifier";
   runtimeInputs = [
@@ -50,7 +62,7 @@ writeShellApplication {
   text = ''
     nixpkgs=${path}
     system=${stdenv.hostPlatform.system}
-    lib=${../../nix/lib}
+    lib=${runtime}/pkgs/build-julia-project
     # The flake's lock, which pins the shared purifier library for the
     # evaluations below.
     flake_lock=${../../flake.lock}
