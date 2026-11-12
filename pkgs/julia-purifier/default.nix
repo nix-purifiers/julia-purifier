@@ -319,7 +319,7 @@ writeShellApplication {
           let
             pkgs = import (builtins.getEnv \"JP_NIXPKGS\") { system = builtins.getEnv \"JP_SYSTEM\"; };
             purifier = import $lib/purifier.nix { inherit (pkgs) lib; flakeLock = $flake_lock; };
-            buildJuliaProject = pkgs.callPackage $lib/build-julia-project.nix { inherit purifier; };
+            buildJuliaProject = pkgs.callPackage $lib/default.nix { inherit purifier; };
             repo = builtins.fetchGit { url = builtins.getEnv \"JP_TOP\"; rev = builtins.getEnv \"JP_REV\"; };
             sub = builtins.getEnv \"JP_SUB\";
             src = if sub == \".\" then repo else repo + \"/\" + sub;
